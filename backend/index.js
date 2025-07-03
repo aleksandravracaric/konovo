@@ -4,8 +4,8 @@ const cors = require('cors');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
-
 const API_KEY = process.env.API_KEY;
+const KONOVO_BASE_URL = 'https://zadatak.konovo.rs'
 
 app.use(cors());
 app.use(express.json());
@@ -24,7 +24,7 @@ app.post('/api/login', async (req, res) => {
     }
 
     try {
-        const response = await axios.post('https://zadatak.konovo.rs/login', {
+        const response = await axios.post(`${KONOVO_BASE_URL}/login`, {
             username,
             password
         });
@@ -50,7 +50,7 @@ app.get('/api/products', async (req, res) => {
     const authHeader = req.headers['authorization'];
 
     try {
-        const response = await axios.get('https://zadatak.konovo.rs/products', {
+        const response = await axios.get(`${KONOVO_BASE_URL}/products`, {
             headers: {
                 Authorization: `${authHeader}`
             }
