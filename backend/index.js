@@ -41,6 +41,26 @@ app.post('/api/login', async (req, res) => {
     }
 });
 
+app.get('/api/products', async (req, res) => {
+    const apiKey = req.headers['x-api-key'];
+    if (apiKey !== API_KEY) {
+        return res.status(401).json({ error: 'Invalid API key' });
+    }
+
+    const authHeader = req.headers['authorization'];
+
+    try {
+        const response = await axios.get('https://zadatak.konovo.rs/products', {
+            headers: {
+                Authorization: `${authHeader}`
+            }
+        })
+        return res.status(200).json(response)
+    } catch (error) {
+        return res.status(400).json({ error: error })
+    }
+});
+
 app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
 });
