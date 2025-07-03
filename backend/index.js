@@ -77,8 +77,7 @@ app.get('/api/products', async (req, res) => {
         if (search) {
             const searchLower = search.toLowerCase();
             products = products.filter(p =>
-                (p.name && p.name.toLowerCase().includes(searchLower)) ||
-                (p.description && p.description.toLowerCase().includes(searchLower))
+                (p.naziv && p.naziv.toLowerCase().includes(searchLower))
             );
         }
 
