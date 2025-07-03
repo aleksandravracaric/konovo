@@ -47,7 +47,7 @@ app.get('/api/products', async (req, res) => {
         return res.status(401).json({ error: 'Invalid API key' });
     }
 
-    const authHeader = req.headers['Authorization'];
+    const authHeader = req.headers['authorization'];
 
     try {
         const response = await axios.get('https://zadatak.konovo.rs/products', {
