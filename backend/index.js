@@ -55,7 +55,36 @@ app.get('/api/products', async (req, res) => {
                 Authorization: `${authHeader}`
             }
         })
-        return res.status(200).json(response.data)
+
+        let products = response.data;
+
+        products = products.map(product => {
+            if (product.categoryName && product.categoryName.toLowerCase() === 'monitori') {
+                product.price = +(product.price * 1.1).toFixed(2);
+            }
+            if (product.description) {
+                product.description = product.description.replace(/brzina/gi, 'performanse');
+            }
+            return product;
+        });
+
+        const { category, search } = req.query;
+
+        if (category) {
+            products = products.filter(p => p.categoryName.toLowerCase() === category.toLowerCase());
+        }
+
+        if (search) {
+            const searchLower = search.toLowerCase();
+            products = products.filter(p =>
+                (p.name && p.name.toLowerCase().includes(searchLower)) ||
+                (p.description && p.description.toLowerCase().includes(searchLower))
+            );
+        }
+
+        res.json(products);
+        return res.status(200).json(response.data);
+
     } catch (error) {
         return res.status(400).json({ error: error })
     }
