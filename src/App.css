@@ -101,10 +101,17 @@
   border: none;
   font-size: 16px !important;
   margin-top: 20px !important;
+  height: 36px;
 }
 
 .buttonLogin:hover {
   background-color: rgb(222, 98, 32) !important;
+}
+
+.spinnerBorderCustom {
+  width: 20px !important;
+  height: 20px !important;
+  border-width: 3px !important;
 }
 
 .headerContainerLogin {
