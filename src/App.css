@@ -151,6 +151,11 @@
   box-shadow: none !important;
 }
 
+.categoryDropdown {
+  padding-top: 20px;
+  padding-left: 20px;
+}
+
 .mainContainer {
   background-color: #e1e1e1;
 }

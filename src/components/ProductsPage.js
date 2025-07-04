@@ -36,7 +36,7 @@ export default function ProductsPage() {
             </div>
 
             <div className='mainContainer'>
-                <div>
+                <div className='categoryDropdown'>
                     <select value={category} onChange={(e) => setCategory(e.target.value)}>
                         <option value="">Sve kategorije</option>
                         <option value="Laptopovi i oprema">Laptopovi i oprema</option>
