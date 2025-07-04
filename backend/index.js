@@ -77,13 +77,10 @@ app.get('/api/products', async (req, res) => {
             );
         }
 
-        if (search) {
-            const searchLower = search.toLowerCase();
-            products = products.filter(p =>
-                (p.naziv && p.naziv.toLowerCase().includes(searchLower))
-            );
+        if (search && search.trim() !== '') {
+            products = products.filter((p) =>
+                p.naziv?.toLowerCase().includes(search.toLowerCase()));
         }
-
 
         res.json(products);
         return res.status(200).json(response.data);
