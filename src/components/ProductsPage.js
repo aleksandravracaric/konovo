@@ -5,14 +5,18 @@ export default function ProductsPage() {
     const [products, setProducts] = useState([])
     const [category, setCategory] = useState('')
     const [search, setSearch] = useState('')
+    const [loading, setLoading] = useState(false)
 
     useEffect(() => {
+        setLoading(true)
         async function product() {
             try {
                 const response = await getProducts({ category, search })
                 setProducts(response.data)
+                setLoading(false)
             } catch (error) {
                 console.log(error)
+                setLoading(false)
             }
         }
         product()
@@ -31,7 +35,6 @@ export default function ProductsPage() {
                 />
             </div>
 
-
             <div>
                 <select value={category} onChange={(e) => setCategory(e.target.value)}>
                     <option value="">Sve kategorije</option>
@@ -39,23 +42,27 @@ export default function ProductsPage() {
                     <option value="Računarske komponente">Računarske komponente</option>
                     <option value="Eksterni punjači, adapteri i baterije">Punjači</option>
                 </select>
-
-
-
             </div>
 
-            <div className='cardProductsContainer'>
-                {products.map((product, index) => (
-                    <div key={index} class="productCard" >
-                        <img src={product.imgsrc} alt={product.naziv} width="100" />
-                        <div class="card-body">
-                            <h5 class="card-title"><strong>{product.naziv}</strong> – {product.price} RSD</h5>
-                            <p class="card-text"></p>
-                            <a href="#" class="btn btn-primary">Go somewhere</a>
-                        </div>
+            {loading ? (
+                <div className="d-flex justify-content-center align-items-center" style={{ minHeight: '80vh' }}>
+                    <div className="spinner-border" role="status">
+                        <span className="visually-hidden">Loading...</span>
                     </div>
-                ))}
-            </div>
+                </div>
+            ) : (
+                <div className='cardProductsContainer'>
+                    {products.map((product, index) => (
+                        <div key={index} class="productCard" >
+                            <img src={product.imgsrc} alt={product.naziv} width="100" />
+                            <div class="card-body">
+                                <h5 class="card-title"><strong>{product.naziv}</strong></h5>
+                                <p class="card-text">{product.price.toFixed(2)} RSD</p>
+                            </div>
+                        </div>
+                    ))}
+                </div>
+            )}
         </div>
     )
 
