@@ -70,8 +70,11 @@ app.get('/api/products', async (req, res) => {
 
         const { category, search } = req.query;
 
-        if (category) {
-            products = products.filter(p => p.categoryName.toLowerCase() === category.toLowerCase());
+
+        if (category && category.trim() !== '') {
+            products = products.filter((p) =>
+                p.categoryName?.toLowerCase() === category.toLowerCase()
+            );
         }
 
         if (search) {
@@ -80,6 +83,7 @@ app.get('/api/products', async (req, res) => {
                 (p.naziv && p.naziv.toLowerCase().includes(searchLower))
             );
         }
+
 
         res.json(products);
         return res.status(200).json(response.data);
