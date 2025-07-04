@@ -33,6 +33,9 @@ export default function ProductDetailPage() {
 
     return (
         <>
+            <div className='headerContainerLogin'>
+                <h3>KONOVO</h3>
+            </div>
             {loading ? (
                 <div className="d-flex justify-content-center align-items-center" style={{ minHeight: '80vh' }}>
                     <div className="spinner-border" role="status">
@@ -40,12 +43,19 @@ export default function ProductDetailPage() {
                     </div>
                 </div>
             ) : (
-                <div className="productDetailsContainer" style={{ padding: '2rem' }} >
-                    <h2>{product.naziv}</h2>
-                    <img src={product.imgsrc} alt={product.naziv} style={{ maxWidth: '300px' }} />
-                    <p><strong>Cena:</strong> {product?.price?.toFixed(2)} RSD</p>
-                    <p dangerouslySetInnerHTML={{ __html: product.description }} />
-                </div >
+                <div className='mainContainerDetailPage'>
+                    <div className="productDetailsContent">
+                        <div className="productImage">
+                            <img src={product.imgsrc} alt={product.naziv} />
+                        </div>
+                        <div className="productInfo">
+                            <h2>{product.naziv}</h2>
+                            <p className="productPrice">{product?.price?.toFixed(2)} RSD</p>
+                            <h5>Opis proizvoda</h5>
+                            <div dangerouslySetInnerHTML={{ __html: product.description }} />
+                        </div>
+                    </div>
+                </div>
             )
             }
         </>
