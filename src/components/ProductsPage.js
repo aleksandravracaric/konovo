@@ -50,18 +50,27 @@ export default function ProductsPage() {
                         <span className="visually-hidden">Loading...</span>
                     </div>
                 </div>
-            ) : (
-                <div className='cardProductsContainer'>
-                    {products.map((product, index) => (
-                        <div key={index} class="productCard" >
-                            <img src={product.imgsrc} alt={product.naziv} width="100" />
-                            <div class="card-body">
-                                <h5 class="card-title"><strong>{product.naziv}</strong></h5>
-                                <p class="card-text">{product.price.toFixed(2)} RSD</p>
+            ) : (<>
+                {products.length > 0 ? (
+                    <div className='cardProductsContainer'>
+                        {products.map((product, index) => (
+                            <div key={index} className="productCard">
+                                <img src={product.imgsrc} alt={product.naziv} width="100" />
+                                <div className="card-body">
+                                    <h5 className="card-title">
+                                        <strong>{product.naziv}</strong>
+                                    </h5>
+                                    <p className="card-text">{product.price.toFixed(2)} RSD</p>
+                                </div>
                             </div>
-                        </div>
-                    ))}
-                </div>
+                        ))}
+                    </div>
+                ) : (
+                    <div className='noProducts'
+                    >Nema proizvoda.
+                    </div>
+                )}
+            </>
             )}
         </div>
     )
