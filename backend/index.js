@@ -59,9 +59,10 @@ app.get('/api/products', async (req, res) => {
         let products = response.data;
 
         products = products.map((product) => {
-            if (product.categoryName && product.categoryName.toLowerCase().trim() === 'monitori') {
+            if (product.categoryName && product.categoryName.trim().toLowerCase() === 'monitori') {
                 product.price = +(product.price * 1.1).toFixed(2);
             }
+
             if (product.description) {
                 product.description = product.description.replace(/brzina/gi, 'performanse');
             }
