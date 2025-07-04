@@ -83,8 +83,7 @@ app.get('/api/products', async (req, res) => {
                 p.naziv?.toLowerCase().includes(search.toLowerCase()));
         }
 
-        res.json(products);
-        return res.status(200).json(response.data);
+        return res.status(200).json(products);
 
     } catch (error) {
         return res.status(400).json({ error: error })
