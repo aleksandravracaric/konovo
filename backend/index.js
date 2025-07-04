@@ -58,8 +58,8 @@ app.get('/api/products', async (req, res) => {
 
         let products = response.data;
 
-        products = products.map(product => {
-            if (product.categoryName && product.categoryName.toLowerCase() === 'monitori') {
+        products = products.map((product) => {
+            if (product.categoryName && product.categoryName.toLowerCase().trim() === 'monitori') {
                 product.price = +(product.price * 1.1).toFixed(2);
             }
             if (product.description) {
