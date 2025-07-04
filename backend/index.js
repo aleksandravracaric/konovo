@@ -90,6 +90,50 @@ app.get('/api/products', async (req, res) => {
     }
 });
 
+app.get('/api/products/:productId', async (req, res) => {
+    const apiKey = req.headers['x-api-key'];
+    if (apiKey !== API_KEY) {
+        return res.status(401).json({ error: 'Invalid API key' });
+    }
+
+    const authHeader = req.headers['authorization'];
+    const { productId } = req.params;
+
+    try {
+        const response = await axios.get(`${KONOVO_BASE_URL}/products`, {
+            headers: {
+                Authorization: `${authHeader}`
+            }
+        });
+
+        let products = response.data;
+
+        products = products.map((product) => {
+            if (product.categoryName && product.categoryName.trim().toLowerCase() === 'monitori') {
+                product.price = +(product.price * 1.1).toFixed(2);
+            }
+
+            if (product.description) {
+                product.description = product.description.replace(/brzina/gi, 'performanse');
+            }
+
+            return product;
+        });
+
+        const product = products.find(p => p.sku === productId);
+
+        if (!product) {
+            return res.status(404).json({ error: 'Product not found' });
+        }
+
+        return res.json(product);
+
+    } catch (error) {
+        return res.status(500).json({ error: 'Server error' });
+    }
+});
+
+
 app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
 });
