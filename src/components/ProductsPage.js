@@ -35,43 +35,45 @@ export default function ProductsPage() {
                 />
             </div>
 
-            <div>
-                <select value={category} onChange={(e) => setCategory(e.target.value)}>
-                    <option value="">Sve kategorije</option>
-                    <option value="Laptopovi i oprema">Laptopovi i oprema</option>
-                    <option value="Računarske komponente">Računarske komponente</option>
-                    <option value="Eksterni punjači, adapteri i baterije">Punjači</option>
-                </select>
-            </div>
-
-            {loading ? (
-                <div className="d-flex justify-content-center align-items-center" style={{ minHeight: '80vh' }}>
-                    <div className="spinner-border" role="status">
-                        <span className="visually-hidden">Loading...</span>
-                    </div>
+            <div className='mainContainer'>
+                <div>
+                    <select value={category} onChange={(e) => setCategory(e.target.value)}>
+                        <option value="">Sve kategorije</option>
+                        <option value="Laptopovi i oprema">Laptopovi i oprema</option>
+                        <option value="Računarske komponente">Računarske komponente</option>
+                        <option value="Eksterni punjači, adapteri i baterije">Punjači</option>
+                    </select>
                 </div>
-            ) : (<>
-                {products.length > 0 ? (
-                    <div className='cardProductsContainer'>
-                        {products.map((product, index) => (
-                            <div key={index} className="productCard">
-                                <img src={product.imgsrc} alt={product.naziv} width="100" />
-                                <div className="card-body">
-                                    <h5 className="card-title">
-                                        <strong>{product.naziv}</strong>
-                                    </h5>
-                                    <p className="card-text">{product.price.toFixed(2)} RSD</p>
+
+                {loading ? (
+                    <div className="d-flex justify-content-center align-items-center" style={{ minHeight: '80vh' }}>
+                        <div className="spinner-border" role="status">
+                            <span className="visually-hidden">Loading...</span>
+                        </div>
+                    </div>
+                ) : (<>
+                    {products.length > 0 ? (
+                        <div className='cardProductsContainer'>
+                            {products.map((product, index) => (
+                                <div key={index} className="productCard">
+                                    <img src={product.imgsrc} alt={product.naziv} width="100" />
+                                    <div className="card-body">
+                                        <h5 className="card-title">
+                                            <strong>{product.naziv}</strong>
+                                        </h5>
+                                        <p className="card-text">{product.price.toFixed(2)} RSD</p>
+                                    </div>
                                 </div>
-                            </div>
-                        ))}
-                    </div>
-                ) : (
-                    <div className='noProducts'
-                    >Nema proizvoda.
-                    </div>
+                            ))}
+                        </div>
+                    ) : (
+                        <div className='noProducts'
+                        >Nema proizvoda.
+                        </div>
+                    )}
+                </>
                 )}
-            </>
-            )}
+            </div>
         </div>
     )
 
