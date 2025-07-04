@@ -24,7 +24,7 @@ export default function ProductDetailPage() {
                 setLoading(false)
             } catch (err) {
                 if (err.response?.status === 404) {
-                    setError('Proizvod nije pronađen.');
+                    setError('Proizvod nije pronađen.')
                     setLoading(false)
                 } else if (err.response?.status === 401) {
                     localStorage.removeItem('token')
@@ -44,16 +44,32 @@ export default function ProductDetailPage() {
         navigate('/')
     }
 
+    const onLogout = (e) => {
+        e.preventDefault()
+
+        localStorage.removeItem('token');
+        navigate('/login');
+    }
+
     return (
         <>
             <div className='headerContainerLogin'>
-                <h3 className='headerTitle' onClick={() => goToProductsPage()}>KONOVO</h3>
+                <div>
+                    <h3 className='headerTitle' onClick={() => goToProductsPage()}>KONOVO</h3>
+                </div>
+                <div>
+                    <button className='logoutButton' onClick={onLogout}>Odjavi se</button>
+                </div>
             </div>
             {loading ? (
                 <div className="d-flex justify-content-center align-items-center" style={{ minHeight: '80vh' }}>
                     <div className="spinner-border" role="status">
                         <span className="visually-hidden">Loading...</span>
                     </div>
+                </div>
+            ) : error ? (
+                <div className="errorMessage">
+                    {error}
                 </div>
             ) : (
                 <div className='mainContainerDetailPage'>

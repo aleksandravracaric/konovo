@@ -33,17 +33,29 @@ export default function ProductsPage() {
         product()
     }, [category, search])
 
+    const onLogout = (e) => {
+        e.preventDefault()
+
+        localStorage.removeItem('token');
+        navigate('/login');
+    }
+
     return (
         <div className='loginPage'>
             <div className='headerContainerLogin'>
-                <h3>KONOVO</h3>
-                <input
-                    className='searchProductsInput'
-                    type="text"
-                    placeholder="Pretraži proizvod..."
-                    value={search}
-                    onChange={(e) => setSearch(e.target.value)}
-                />
+                <div>
+                    <h3>KONOVO</h3>
+                </div>
+                <div>
+                    <input
+                        className='searchProductsInput'
+                        type="text"
+                        placeholder="Pretraži proizvod..."
+                        value={search}
+                        onChange={(e) => setSearch(e.target.value)}
+                    />
+                    <button className='logoutButton' onClick={onLogout}>Odjavi se</button>
+                </div>
             </div>
 
             <div className='mainContainer'>
