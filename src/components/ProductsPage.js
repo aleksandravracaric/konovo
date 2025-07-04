@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { getProducts } from '../network/ProductService'
+import { Link } from 'react-router-dom'
 
 export default function ProductsPage() {
     const [products, setProducts] = useState([])
@@ -55,7 +56,15 @@ export default function ProductsPage() {
                     {products.length > 0 ? (
                         <div className='cardProductsContainer'>
                             {products.map((product, index) => (
-                                <div key={index} className="productCard">
+
+
+                                <Link
+                                    to={`/products/${product.sku}`}
+                                    className="productCard"
+                                    key={index}
+
+                                    style={{ textDecoration: 'none', color: 'inherit' }}
+                                >
                                     <img src={product.imgsrc} alt={product.naziv} width="100" />
                                     <div className="card-body">
                                         <h5 className="card-title">
@@ -63,7 +72,7 @@ export default function ProductsPage() {
                                         </h5>
                                         <p className="card-text">{product.price.toFixed(2)} RSD</p>
                                     </div>
-                                </div>
+                                </Link>
                             ))}
                         </div>
                     ) : (
