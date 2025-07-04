@@ -19,3 +19,16 @@ export function getProducts({ category = '', search = '' }) {
         }
     })
 }
+
+export function getProductById(productId) {
+    const token = localStorage.getItem('token');
+    const headers = {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`,
+        'x-api-key': `${apiKey}`,
+    };
+    return axios.get(`${BASE_URL}/api/products/${productId}`, {
+        headers: headers
+    });
+
+}
