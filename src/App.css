@@ -183,9 +183,7 @@
 .noProducts {
   display: flex !important;
   justify-content: center !important;
-  align-items: center !important;
-  text-align: center !important;
-  padding: 40px;
+  padding-top: 100px;
   font-size: 18px;
-  min-height: 30rem;
+  min-height: calc(100vh - 50px);
 }
