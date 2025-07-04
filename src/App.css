@@ -190,6 +190,10 @@
   min-height: calc(100vh - 50px);
 }
 
+.headerTitle {
+  cursor: pointer;
+}
+
 .mainContainerDetailPage {
   background-color: #e1e1e1;
   min-height: calc(100vh - 50px);

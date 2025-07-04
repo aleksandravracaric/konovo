@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import { getProductById } from '../network/ProductService'
 
 export default function ProductDetailPage() {
@@ -7,19 +7,28 @@ export default function ProductDetailPage() {
     const [product, setProduct] = useState(null)
     const [loading, setLoading] = useState(true)
     const [error, setError] = useState('')
+    const navigate = useNavigate()
 
     useEffect(() => {
         setLoading(true)
+        const token = localStorage.getItem('token')
+        if (!token) {
+            navigate('/login')
+            return
+        }
         const fetchProduct = async () => {
             try {
                 console.log("sku", sku)
-                const response = await getProductById(sku);
-                setProduct(response.data);
+                const response = await getProductById(sku)
+                setProduct(response.data)
                 setLoading(false)
             } catch (err) {
                 if (err.response?.status === 404) {
                     setError('Proizvod nije pronađen.');
                     setLoading(false)
+                } else if (err.response?.status === 401) {
+                    localStorage.removeItem('token')
+                    navigate('/login')
                 } else {
                     setError('Greška prilikom učitavanja.');
                     setLoading(false)
@@ -31,10 +40,14 @@ export default function ProductDetailPage() {
         fetchProduct();
     }, [sku]);
 
+    const goToProductsPage = () => {
+        navigate('/')
+    }
+
     return (
         <>
             <div className='headerContainerLogin'>
-                <h3>KONOVO</h3>
+                <h3 className='headerTitle' onClick={() => goToProductsPage()}>KONOVO</h3>
             </div>
             {loading ? (
                 <div className="d-flex justify-content-center align-items-center" style={{ minHeight: '80vh' }}>

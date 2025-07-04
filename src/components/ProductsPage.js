@@ -1,15 +1,21 @@
 import React, { useEffect, useState } from 'react'
 import { getProducts } from '../network/ProductService'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 
 export default function ProductsPage() {
     const [products, setProducts] = useState([])
     const [category, setCategory] = useState('')
     const [search, setSearch] = useState('')
     const [loading, setLoading] = useState(false)
+    const navigate = useNavigate()
 
     useEffect(() => {
         setLoading(true)
+        const token = localStorage.getItem('token')
+        if (!token) {
+            navigate('/login')
+            return
+        }
         async function product() {
             try {
                 const response = await getProducts({ category, search })
@@ -18,6 +24,10 @@ export default function ProductsPage() {
             } catch (error) {
                 console.log(error)
                 setLoading(false)
+                if (error.response?.status === 401) {
+                    localStorage.removeItem('token')
+                    navigate('/login')
+                }
             }
         }
         product()
