@@ -86,7 +86,10 @@ app.get('/api/products', async (req, res) => {
         return res.status(200).json(products);
 
     } catch (error) {
-        return res.status(400).json({ error: error })
+        const status = error.response?.status || 500;
+        const message = error.response?.data?.error || error.message || 'Internal server error';
+
+        return res.status(status).json({ error: message })
     }
 });
 
@@ -129,7 +132,10 @@ app.get('/api/products/:productId', async (req, res) => {
         return res.json(product);
 
     } catch (error) {
-        return res.status(500).json({ error: 'Server error' });
+        const status = error.response?.status || 500;
+        const message = error.response?.data?.error || error.message || 'Internal server error';
+
+        return res.status(status).json({ error: message })
     }
 });
 
